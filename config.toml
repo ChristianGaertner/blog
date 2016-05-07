@@ -1,0 +1,6 @@
+baseurl = "http://blog.cpgaertner.de/"
+languageCode = "en-us"
+title = "/dev/random"
+
+[Params]
+	Author = "Christian Gärtner"
