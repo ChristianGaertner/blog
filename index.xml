@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>/dev/random</title>
+    <link>http://blog.cpgaertner.de/</link>
+    <description>Recent content on /dev/random</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 07 May 2016 18:33:56 +0200</lastBuildDate>
+    <atom:link href="http://blog.cpgaertner.de/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Climbing Wall Timekeeping Project 00</title>
+      <link>http://blog.cpgaertner.de/post/climbing-wall-timekeeping-project-00/</link>
+      <pubDate>Sat, 07 May 2016 18:33:56 +0200</pubDate>
+      
+      <guid>http://blog.cpgaertner.de/post/climbing-wall-timekeeping-project-00/</guid>
+      <description>
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;TL;DR&lt;/em&gt; We want to build a timekeeping (just a fancy way of saying &amp;lsquo;some stopwatches&amp;rsquo;) system for a local climbing wall.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Let me start this very first blog post on this series by explaining how it all started and what I am trying to achieve, this post will not cover any technical aspects about the build, rather it introduces you to the project, my ideas and thoughts. The next one will be the very first &lt;em&gt;real&lt;/em&gt; post on this topic, hence the number &lt;em&gt;00&lt;/em&gt; as index for this post.&lt;/p&gt;
+
+&lt;p&gt;A few friends of mine are running a climbing wall in our district and I tend join them occasionally for some climbing. The wall is about 25m tall and has 4 seperate lanes (2m each), all are parallel to each other and very straight since it&amp;rsquo;s located on one wall of the steeple here. One day we were joking around how nice it would be to have some buzzers on the top of the climbing wall to compare the results, you know&amp;hellip; guys seem to like comparing their&amp;hellip; track times, of course! After some joking around, I realized that this would make a great project for a few weekend to tinker around with. I liked the idea of building an Arduino based project for quite some time now and this seems like the perfect opportunity.&lt;/p&gt;
+
+&lt;p&gt;I&amp;rsquo;d like to start the technical side of this project with a small disclaimer. I am a software developer. I have some practical experience with electronics, but mainly hooking up a few transitors and LEDs, etc. I have not touched an Arduino myself, yet. But I&amp;rsquo;ve watched a lot of projects videos on YouTube, not for learning, but mostly because I like watching somebody build it.&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:1&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:1&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;the-plan&#34;&gt;The Plan&lt;/h2&gt;
+
+&lt;p&gt;So what have I planned? Good question. Not very much yet seems to be the answer right now - sadly.&lt;/p&gt;
+
+&lt;p&gt;But here is the basic outline. I try to describe the interesting things in more detailed blog posts, as I go along in this project. This &lt;strong&gt;won&amp;rsquo;t&lt;/strong&gt; be a tutorial! I want to make this clear, however it &lt;strong&gt;will&lt;/strong&gt; be (hopefully) a progress report and note taking along side. Two reasons. I have an excuse to host my own blog&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:2&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:2&#34;&gt;2&lt;/a&gt;&lt;/sup&gt; and force myself to keep up with the project and not let it fade into oblivion.&lt;/p&gt;
+
+&lt;p&gt;We want to mount 4 buzzers (fancy switches) to the top of the climbing wall, these should be used to stop the timer for the given lane. The timer should be started from a central up at the ground, where the timer display itself lives.&lt;/p&gt;
+
+&lt;p&gt;The display itself will be a 1.8&amp;rdquo; Color TFT&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:3&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:3&#34;&gt;3&lt;/a&gt;&lt;/sup&gt; display inside a waterproof enclosure (the Arduino will live here to). I will be using an Arduino Micro Pro. I am aware that an Uno might be easier to get started with, but money is an important factor since I do not want to spend that much for a side project like this.&lt;/p&gt;
+
+&lt;h3 id=&#34;considerations&#34;&gt;Considerations&lt;/h3&gt;
+
+&lt;p&gt;25m is a long distance, and a cable this long is basically a giant antenna which will pick up a lot of noise. This might interfere with an acurate time measurement. So I tought - we will see how this idea holds - a CAT-6 LAN cable should do the trick, in conjunction with the button pin on the arduino pulled &lt;em&gt;HIGH&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;ui-design&#34;&gt;UI Design&lt;/h3&gt;
+
+&lt;p&gt;The screen is rather small and a good UI/UX are crucial if the device will be used during normal operation of the climbing wall. If it is too complicated nobody will use it!&lt;/p&gt;
+
+&lt;p&gt;The project box will expose a total of 3 buttons. Two directly below the screen and a bigger one somewhere else. The bigger one will act as start button while the other two as soft buttons.&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:4&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:4&#34;&gt;4&lt;/a&gt;&lt;/sup&gt; This allows for more complex interactions in the future.&lt;/p&gt;
+
+&lt;p&gt;The screen will be dominated by a large clock, the most important aspect of every stopwatch, I guess. If one presses start the clock should be counting up, until all 4 buttons on top of the lanes have been pressed.
+As soon as the first one reached the top the time should be recorded and displayed in a smaller font face below the main clock. This acts as basic ranking system for each given run.&lt;/p&gt;
+
+&lt;h2 id=&#34;final-thoughts&#34;&gt;Final Thoughts&lt;/h2&gt;
+
+&lt;p&gt;Everything else will be figured out as I go along with this project. Tonight I will start by tinkering around with the arduino, lighting up some LEDs and pressing some buttons. This should be fun.&lt;/p&gt;
+
+&lt;p&gt;The next post in this series will likely cover the development of the UI for the TFT display, or about my solution for acurate time keeping and how to handle noise on the input channel. As I said, this is not a tutorial, it is a project journal.&lt;/p&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+
+&lt;hr /&gt;
+
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;I like the YouTube Channel &lt;a href=&#34;https://www.youtube.com/user/greatscottlab&#34;&gt;GreatScott&lt;/a&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:1&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34;&gt;I hope that I will write more posts, if I have system already up and running&amp;hellip;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:2&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:3&#34;&gt;I got this &lt;a href=&#34;https://www.adafruit.com/products/358&#34;&gt;one&lt;/a&gt;, which also has a built in SD card reader for persiting the times.
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:3&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:4&#34;&gt;the buttons will provide different functionality based on the screen menu.
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:4&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
