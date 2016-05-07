@@ -1,4 +1,4 @@
-baseurl = "http://blog.cpgaertner.de/"
+baseurl = "https://blog.cpgaertner.de/"
 languageCode = "en-us"
 title = "/dev/random"
 
