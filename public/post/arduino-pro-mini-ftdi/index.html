@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="Christian Gärtner">
+<meta name="generator" content="Hugo 0.15" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://blog.cpgaertner.de/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="https://blog.cpgaertner.de/index.xml" type="application/rss+xml" title="/dev/random">
+<title>Arduino Pro Mini FTDI: Programmer is not responding - /dev/random</title>
+
+    <link rel="stylesheet" href="https://blog.cpgaertner.de/css/posts.css">
+
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <a class="path" href="https://blog.cpgaertner.de/">[/dev/random]</a>
+    <span class="caret"># _</span>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2016-05-08">May 08, 2016</time></span>
+
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">Arduino Pro Mini FTDI: Programmer is not responding</h1>
+  <section class="body" itemprop="articleBody">
+    
+
+<blockquote>
+<p>TL;DR Always make sure to have your TTL to USB adapter configured correctly.</p>
+</blockquote>
+
+<p>As I started my very first Arduino based project, you can read about it <a href="/post/climbing-wall-timekeeping-project-00/">here</a>, I encountered some issues.</p>
+
+<p>I decided to write a blog post seperate from the main series, because this topic
+is not specific to the project and maybe some other people out there encountered
+the same difficulties with getting their Arduino Pro Mini up and running.</p>
+
+<h2 id="the-problem:cc9621b9548382e26e0a6f7e823376dc">The Problem</h2>
+
+<p>So I plugged my Programing Adapter <code>FT232RL</code> into the Arduino board and the
+USB plug into my computer<sup class="footnote-ref" id="fnref:cc9621b9548382e26e0a6f7e823376dc:1"><a rel="footnote" href="#fn:cc9621b9548382e26e0a6f7e823376dc:1">1</a></sup>.</p>
+
+<p>The green LED on the board lit up, and the red LED on pin 13 flickered. All
+LEDs on the FT232RL board lit up as well. All seemed fine, the serial device
+was up at <code>/dev/cu.usbserial-A94ZFXPH</code> and could be selected inside the Arduino IDE.</p>
+
+<p>But as soon as I hit upload errors were starting to fill the console:</p>
+
+<pre><code>avrdude: stk500_recv(): programmer is not responding
+stk500_getsync() attempt 1 of 10: not in sync: resp=0x00
+avrdude: stk500_recv(): programmer is not responding
+stk500_getsync() attempt 2 of 10: not in sync: resp=0x00
+...
+</code></pre>
+
+<p>I spend a lot of time googling around, a lot of people seem to had a similar problem,
+but all the propsed fixes didn&rsquo;t work for me, I also installed the latest FTDI driver,
+you can get them <a href="http://www.ftdichip.com/Drivers/VCP.htm">here</a>. But nothing worked.</p>
+
+<p>I eventually came to the conclusion, that the problem had to do something with
+my operating system, so I installed the Arduino IDE on my Debian laptop.</p>
+
+<p>The result were disenchanting. The very same output.</p>
+
+<p>So the quest for a solution continued. I even considered that my board came without
+a bootloader, but I couldn&rsquo;t figure out how to verify this assumption.</p>
+
+<p>At one point in time I looked back at the programmer and checked for any shorts
+and the like. And then it struck me. I forgot to jump the voltage pins.</p>
+
+<p>That was stupid. My package arrived with bend pins and some broken headers,
+I just assumed, that they were spare headers for the programmer. As it turns out,
+this assumption was false. They were jumpers to select the correct voltage, as
+seen in this image:</p>
+
+<p><img src="/img/arduino-pro-mini-ftdi/jumper-pins.png" alt="Header pins of the Programmer" />
+<em>The slightly bend jumper pins</em></p>
+
+<p>In retrospect this should have been easy to detect. But during debugging it wasn&rsquo;t.</p>
+
+<p>One single missing jumper were the cause of this problem. Fixed in two seconds by
+adding the jumper between the 3.3V and center pin.</p>
+
+<p>I understand that this will not solve the problem <code>programmer is not responding</code>
+for everyone, but if it helps just one of you out there, the time to write this
+post was worth it.</p>
+<div class="footnotes">
+
+<hr />
+
+<ol>
+<li id="fn:cc9621b9548382e26e0a6f7e823376dc:1">I am rocking a mid 2010 iMac with Mac OS X 10.9 running by the way.
+ <a class="footnote-return" href="#fnref:cc9621b9548382e26e0a6f7e823376dc:1"><sup>[return]</sup></a></li>
+</ol>
+</div>
+
+  </section>
+</article>
+
+</main>
+
+
+</div>
+
+<footer>
+  <div class="container">
+    <span class="copyright">&copy; 2016  /dev/random - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+
