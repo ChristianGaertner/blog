@@ -1,0 +1,14 @@
+/* Images in posts */
+article {
+  /* the counter will be used to prefix the captions with 'Figure n: '*/
+  counter-reset: section;
+}
+
+article p > img {
+  width: 100%;
+  border-radius: 5px;
+}
+article p > img + em::before {
+  counter-increment: section;
+  content: "Figure " counter(section) ": ";
+}
