@@ -3,4 +3,5 @@ languageCode = "en-us"
 title = "/dev/random"
 
 [Params]
-	Author = "Christian Gärtner"
+	author = "Christian Gärtner"
+	custom_css = ["css/posts.css"]
