@@ -6,8 +6,87 @@
     <description>Recent content on /dev/random</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 07 May 2016 18:33:56 +0200</lastBuildDate>
+    <lastBuildDate>Sun, 08 May 2016 17:10:02 +0200</lastBuildDate>
     <atom:link href="https://blog.cpgaertner.de/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Arduino Pro Mini FTDI: Programmer is not responding</title>
+      <link>https://blog.cpgaertner.de/post/arduino-pro-mini-ftdi/</link>
+      <pubDate>Sun, 08 May 2016 17:10:02 +0200</pubDate>
+      
+      <guid>https://blog.cpgaertner.de/post/arduino-pro-mini-ftdi/</guid>
+      <description>
+
+&lt;blockquote&gt;
+&lt;p&gt;TL;DR Always make sure to have your TTL to USB adapter configured correctly.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;As I started my very first Arduino based project, you can read about it &lt;a href=&#34;https://blog.cpgaertner.de/post/climbing-wall-timekeeping-project-00/&#34;&gt;here&lt;/a&gt;, I encountered some issues.&lt;/p&gt;
+
+&lt;p&gt;I decided to write a blog post seperate from the main series, because this topic
+is not specific to the project and maybe some other people out there encountered
+the same difficulties with getting their Arduino Pro Mini up and running.&lt;/p&gt;
+
+&lt;h2 id=&#34;the-problem:cc9621b9548382e26e0a6f7e823376dc&#34;&gt;The Problem&lt;/h2&gt;
+
+&lt;p&gt;So I plugged my Programing Adapter &lt;code&gt;FT232RL&lt;/code&gt; into the Arduino board and the
+USB plug into my computer&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:cc9621b9548382e26e0a6f7e823376dc:1&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:cc9621b9548382e26e0a6f7e823376dc:1&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
+
+&lt;p&gt;The green LED on the board lit up, and the red LED on pin 13 flickered. All
+LEDs on the FT232RL board lit up as well. All seemed fine, the serial device
+was up at &lt;code&gt;/dev/cu.usbserial-A94ZFXPH&lt;/code&gt; and could be selected inside the Arduino IDE.&lt;/p&gt;
+
+&lt;p&gt;But as soon as I hit upload errors were starting to fill the console:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;avrdude: stk500_recv(): programmer is not responding
+stk500_getsync() attempt 1 of 10: not in sync: resp=0x00
+avrdude: stk500_recv(): programmer is not responding
+stk500_getsync() attempt 2 of 10: not in sync: resp=0x00
+...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I spend a lot of time googling around, a lot of people seem to had a similar problem,
+but all the propsed fixes didn&amp;rsquo;t work for me, I also installed the latest FTDI driver,
+you can get them &lt;a href=&#34;http://www.ftdichip.com/Drivers/VCP.htm&#34;&gt;here&lt;/a&gt;. But nothing worked.&lt;/p&gt;
+
+&lt;p&gt;I eventually came to the conclusion, that the problem had to do something with
+my operating system, so I installed the Arduino IDE on my Debian laptop.&lt;/p&gt;
+
+&lt;p&gt;The result were disenchanting. The very same output.&lt;/p&gt;
+
+&lt;p&gt;So the quest for a solution continued. I even considered that my board came without
+a bootloader, but I couldn&amp;rsquo;t figure out how to verify this assumption.&lt;/p&gt;
+
+&lt;p&gt;At one point in time I looked back at the programmer and checked for any shorts
+and the like. And then it struck me. I forgot to jump the voltage pins.&lt;/p&gt;
+
+&lt;p&gt;That was stupid. My package arrived with bend pins and some broken headers,
+I just assumed, that they were spare headers for the programmer. As it turns out,
+this assumption was false. They were jumpers to select the correct voltage, as
+seen in this image:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://blog.cpgaertner.de/img/arduino-pro-mini-ftdi/jumper-pins.png&#34; alt=&#34;Header pins of the Programmer&#34; /&gt;
+&lt;em&gt;The slightly bend jumper pins&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;In retrospect this should have been easy to detect. But during debugging it wasn&amp;rsquo;t.&lt;/p&gt;
+
+&lt;p&gt;One single missing jumper were the cause of this problem. Fixed in two seconds by
+adding the jumper between the 3.3V and center pin.&lt;/p&gt;
+
+&lt;p&gt;I understand that this will not solve the problem &lt;code&gt;programmer is not responding&lt;/code&gt;
+for everyone, but if it helps just one of you out there, the time to write this
+post was worth it.&lt;/p&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+
+&lt;hr /&gt;
+
+&lt;ol&gt;
+&lt;li id=&#34;fn:cc9621b9548382e26e0a6f7e823376dc:1&#34;&gt;I am rocking a mid 2010 iMac with Mac OS X 10.9 running by the way.
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:cc9621b9548382e26e0a6f7e823376dc:1&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>Climbing Wall Timekeeping Project 00</title>

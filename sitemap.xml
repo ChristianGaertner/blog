@@ -3,8 +3,13 @@
   
   <url>
     <loc>https://blog.cpgaertner.de/</loc>
-    <lastmod>2016-05-07T18:33:56+02:00</lastmod>
+    <lastmod>2016-05-08T17:10:02+02:00</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.cpgaertner.de/post/arduino-pro-mini-ftdi/</loc>
+    <lastmod>2016-05-08T17:10:02+02:00</lastmod>
   </url>
   
   <url>
